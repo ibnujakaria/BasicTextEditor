@@ -1,12 +1,13 @@
-from PySide import QtGui
+from PySide import QtGui, QtCore
 
 class FileMenu(QtGui.QMenu):
 
-    def __init__(self, main):
+    def __init__(self, main, fileName = None):
         super(FileMenu, self).__init__("File")
 
         self.prepareActions()
         self.mainWindow = main
+        self.fileName = fileName
 
     def prepareActions(self):
         self.addAction("New File", self.actionNewFile, 'Ctrl+N')
@@ -21,12 +22,16 @@ class FileMenu(QtGui.QMenu):
 
     def actionOpenFile(self):
         print("open file")
-        pass
+        fileNames= QtGui.QFileDialog.getOpenFileNames(self, 'Open File', '~/')[0]
+
+        for fileName in fileNames:
+            print(fileName)
+            self.mainWindow.newTab(fileName)
+
 
     def actionSetting(self):
         print("setings")
         pass
 
     def actionExit(self):
-        print("quit")
-        pass
+        QtCore.QCoreApplication.instance().exit()

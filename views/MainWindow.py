@@ -1,11 +1,12 @@
 from PySide import QtGui, QtCore
 from views.menus import FileMenu
-from views.widgets import WelcomeWidget
+from views.widgets import TextView
 
 class MainWindow(QtGui.QMainWindow):
 
     statusBar = None
     menuBar = None
+    textViews = []
 
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -14,7 +15,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def prepareUI(self):
         self.resize(800, 600)
-
+        self.setWindowTitle('Basic Text Editor')
         self.prepareStatusBar()
         self.prepareMenuBar()
         self.prepareDockWidget()
@@ -32,14 +33,17 @@ class MainWindow(QtGui.QMainWindow):
         self.setMenuBar(self.menuBar)
 
     def prepareDockWidget(self):
-
-
         self.label = QtGui.QLabel("Selamat datang di basic text editor :)", self)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.resize(self.size())
+        self.label.resize(self.width(), self.height() - 50)
+        self.label.setFont(QtGui.QFont('Sans', 20))
+        self.label.move(0, 30)
 
-    def newTab(self):
-        self.dockWidget = WelcomeWidget(self)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, self.dockWidget)
+    def newTab(self, fileName = None):
+        print("mainmenu-new-tab")
+        print(fileName)
+        textView = TextView(self, fileName)
+        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, textView)
+        self.textViews.append(textView)
 
-        self.label.hide()
+        #self.label.hide()

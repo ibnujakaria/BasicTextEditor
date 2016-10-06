@@ -1,1 +1,1 @@
-from .WelcomeWidget import WelcomeWidget
+from .TextView import TextView
