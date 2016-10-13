@@ -1,12 +1,12 @@
 from PySide import QtGui, QtCore
 from views.menus import FileMenu
-from views.widgets import TextView
+from views.widgets import Tab
 
 class MainWindow(QtGui.QMainWindow):
 
     statusBar = None
     menuBar = None
-    textViews = []
+    tabs = []
 
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -19,6 +19,7 @@ class MainWindow(QtGui.QMainWindow):
         self.prepareStatusBar()
         self.prepareMenuBar()
         self.prepareDockWidget()
+        self.prepareTabWidget()
         self.show()
 
     def prepareStatusBar(self):
@@ -39,11 +40,41 @@ class MainWindow(QtGui.QMainWindow):
         self.label.setFont(QtGui.QFont('Sans', 20))
         self.label.move(0, 30)
 
-    def newTab(self, fileName = None):
-        print("mainmenu-new-tab")
-        print(fileName)
-        textView = TextView(self, fileName)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, textView)
-        self.textViews.append(textView)
+    def prepareTabWidget(self):
+        self.tabWidget = QtGui.QTabWidget(self)
+        self.tabWidget.resize(self.label.size())
+        self.tabWidget.move(0, 30)
+        self.tabWidget.setMovable(True)
+        self.tabWidget.setTabsClosable(True)
+        self.tabWidget.tabCloseRequested.connect(self.closeTab)
+        self.tabWidget.hide()
 
-        #self.label.hide()
+    def newTab(self, fileName = None):
+        print(fileName)
+        tab = Tab(self, fileName)
+        title = fileName
+
+        self.tabs.append(tab)
+
+        if not title:
+            title = "Untitled " + str(len(self.tabs))
+        else:
+            title = title.split("/")[-1]
+
+        self.tabWidget.show()
+        index = self.tabWidget.addTab(tab, title)
+        self.tabWidget.setCurrentIndex(index)
+
+    def hideAllTextViews(self):
+        for tab in self.tabs:
+            tab.setActive(False)
+
+    def drawTextView(self, textView):
+        self.textEditor.show()
+        self.textEditor.setText(textView.getTheText())
+
+    def closeTab(self, index):
+        self.tabWidget.removeTab(index)
+
+        if len(self.tabs):
+            self.tabWidget.hide()
