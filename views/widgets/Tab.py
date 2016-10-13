@@ -19,7 +19,7 @@ class Tab(QtGui.QWidget):
 
     def prepareTextView(self):
         self.textEditor = QtGui.QTextEdit(self)
-        self.textEditor.resize(self.parent().width() - 5, self.parent().height() - 20)
+        self.textEditor.resize(self.parent().width() - 5, self.parent().height() - 90)
 
         self.readTheTextFromSource()
 
@@ -28,6 +28,6 @@ class Tab(QtGui.QWidget):
         if self.fileName != None:
             print("file name is not none")
             text = self.textManager.readFile(self.fileName)
-            self.textEditor.setText(text)
+            self.textEditor.setHtml(text)
 
         # print(text)
