@@ -1,5 +1,5 @@
 from pygments import highlight
-from pygments.lexers import get_lexer_for_filename
+from pygments.lexers import guess_lexer
 from pygments.formatters import HtmlFormatter
 
 class TextManager():
@@ -11,10 +11,7 @@ class TextManager():
         print("read file")
         with open(fileName, 'r') as file:
             text = file.read()
-            lexer = get_lexer_for_filename(fileName)
-            formatter = HtmlFormatter(lineos = True, cssclass = 'source')
-            code = highlight(text, lexer, formatter)
-            code = '<style>' + HtmlFormatter().get_style_defs() + '</style>' + code
+            code = self.highLightText(text)
 
         print(text)
         return code
@@ -22,3 +19,11 @@ class TextManager():
     def save(self, fileName, text):
         file = open(fileName, 'w')
         file.write(text)
+
+    def highLightText(self, text):
+        lexer = guess_lexer(text)
+        formatter = HtmlFormatter(lineos=True, cssclass='source')
+        code = highlight(text, lexer, formatter)
+        code = '<style>' + HtmlFormatter().get_style_defs() + '</style>' + code
+
+        return code

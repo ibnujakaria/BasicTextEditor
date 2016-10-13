@@ -9,4 +9,9 @@ if __name__ == '__main__':
     sys.exit(app.exec_()) 
 
 
-# this file is edited with sakinah editor
+# this file is edited with sakinah editor 
+# cuman ini nggak bisa langsung gitu
+
+# iki wes isok gurung?                                                                                                                  
+
+# oke wes, iki jos tenan                                         
