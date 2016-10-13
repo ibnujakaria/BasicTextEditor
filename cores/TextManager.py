@@ -22,7 +22,7 @@ class TextManager():
 
     def highLightText(self, text):
         lexer = guess_lexer(text)
-        formatter = HtmlFormatter(lineos=True, cssclass='source')
+        formatter = HtmlFormatter()
         code = highlight(text, lexer, formatter)
         code = '<style>' + HtmlFormatter().get_style_defs() + '</style>' + code
 
