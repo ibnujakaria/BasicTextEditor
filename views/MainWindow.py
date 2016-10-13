@@ -75,6 +75,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def closeTab(self, index):
         self.tabWidget.removeTab(index)
+        self.tabs.pop(index)
 
-        if len(self.tabs):
+        if not len(self.tabs):
             self.tabWidget.hide()
