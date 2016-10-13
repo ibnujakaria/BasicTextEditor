@@ -12,6 +12,7 @@ class FileMenu(QtGui.QMenu):
     def prepareActions(self):
         self.addAction("New File", self.actionNewFile, 'Ctrl+N')
         self.addAction("Open File", self.actionOpenFile, 'Ctrl+O')
+        self.addAction("Save", self.actionSaveFile, 'Ctrl+S')
         self.addAction("Setting", self.actionOpenFile, 'Ctrl+Alt+S')
         self.addAction("Exit", self.actionExit, 'Ctrl+Q')
 
@@ -22,12 +23,14 @@ class FileMenu(QtGui.QMenu):
 
     def actionOpenFile(self):
         print("open file")
-        fileNames= QtGui.QFileDialog.getOpenFileNames(self, 'Open File', '~/')[0]
+        fileNames = QtGui.QFileDialog.getOpenFileNames(self, 'Open File', '~/')[0]
 
         for fileName in fileNames:
             print(fileName)
             self.mainWindow.newTab(fileName)
 
+    def actionSaveFile(self):
+        self.mainWindow.saveFile()
 
     def actionSetting(self):
         print("setings")

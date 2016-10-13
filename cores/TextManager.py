@@ -18,3 +18,7 @@ class TextManager():
 
         print(text)
         return code
+
+    def save(self, fileName, text):
+        file = open(fileName, 'w')
+        file.write(text)

@@ -79,3 +79,7 @@ class MainWindow(QtGui.QMainWindow):
 
         if not len(self.tabs):
             self.tabWidget.hide()
+
+
+    def saveFile(self):
+        self.tabs[self.tabWidget.currentIndex()].save()

@@ -31,3 +31,8 @@ class Tab(QtGui.QWidget):
             self.textEditor.setHtml(text)
 
         # print(text)
+
+    def save(self):
+        print('save file of' + self.fileName)
+        print(self.textEditor.toPlainText())
+        self.textManager.save(self.fileName, self.textEditor.toPlainText())
