@@ -31,7 +31,7 @@ class Tab(QtGui.QWidget):
         if self.fileName != None:
             print("file name is not none")
             text = self.textManager.readFile(self.fileName)
-            self.textEditor.setHtml(text)
+            self.textEditor.setText(text)
 
         # print(text)
 
@@ -41,18 +41,7 @@ class Tab(QtGui.QWidget):
         self.textManager.save(self.fileName, self.textEditor.toPlainText())
 
     def onTextChanged(self):
-        # update the current text with pygments
-        # print(self.textManager.highLightText(self.textEditor.toPlainText()))
-        if self.changed:
-            self.changed = not self.changed
-            print("nothing")
-        else:
-            self.changed = not self.changed
-            self.currentCursorPosition = self.textEditor.textCursor().position()
-            self.textEditor.setHtml(self.textManager.highLightText(self.textEditor.toPlainText()))
-            # print(self.currentCursorPosition)
-            textCursor = self.textEditor.textCursor()
-            textCursor.setPosition(self.currentCursorPosition, QtGui.QTextCursor.MoveAnchor)
-            self.textEditor.setTextCursor(textCursor)
+        # do nothing
+        pass
 
 

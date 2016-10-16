@@ -11,19 +11,9 @@ class TextManager():
         print("read file")
         with open(fileName, 'r') as file:
             text = file.read()
-            code = self.highLightText(text)
 
-        print(text)
-        return code
+        return text
 
     def save(self, fileName, text):
         file = open(fileName, 'w')
         file.write(text)
-
-    def highLightText(self, text):
-        lexer = guess_lexer(text)
-        formatter = HtmlFormatter()
-        code = highlight(text, lexer, formatter)
-        code = '<style>' + HtmlFormatter().get_style_defs() + '</style>' + code
-
-        return code

@@ -1,6 +1,7 @@
 from PySide import QtGui, QtCore
-from views.menus import FileMenu
+from views.menus import FileMenu, EditMenu
 from views.widgets import Tab
+from views.panels import FindPanel
 
 class MainWindow(QtGui.QMainWindow):
 
@@ -18,8 +19,9 @@ class MainWindow(QtGui.QMainWindow):
         self.setWindowTitle('Basic Text Editor')
         self.prepareStatusBar()
         self.prepareMenuBar()
-        self.prepareDockWidget()
+        self.prepareWelcomeText()
         self.prepareTabWidget()
+        self.prepareBottomPanel()
         self.show()
 
     def prepareStatusBar(self):
@@ -30,10 +32,11 @@ class MainWindow(QtGui.QMainWindow):
     def prepareMenuBar(self):
         self.menuBar = QtGui.QMenuBar()
         self.menuBar.addMenu(FileMenu(self))
+        self.menuBar.addMenu(EditMenu(self))
 
         self.setMenuBar(self.menuBar)
 
-    def prepareDockWidget(self):
+    def prepareWelcomeText(self):
         self.label = QtGui.QLabel("Selamat datang di basic text editor :)", self)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.resize(self.width(), self.height() - 50)
@@ -48,6 +51,21 @@ class MainWindow(QtGui.QMainWindow):
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.tabCloseRequested.connect(self.closeTab)
         self.tabWidget.hide()
+
+    def prepareBottomPanel(self):
+        self.findPanel = FindPanel(self)
+        self.findPanel.hide()
+
+    def openFindPanel(self, focus = 'find'):
+        if not len(self.tabs):
+            return
+
+        if self.findPanel.isVisible():
+            self.findPanel.hide()
+        else:
+            self.findPanel.show()
+
+        self.findPanel.setFocus(focus)
 
     def newTab(self, fileName = None):
         print(fileName)
@@ -80,6 +98,7 @@ class MainWindow(QtGui.QMainWindow):
         if not len(self.tabs):
             self.tabWidget.hide()
 
+        self.findPanel.hide()
 
     def saveFile(self):
-        self.tabs[self.tabWidget.currentIndex()].save()
+        self.tabs[self.tabWidget.currentIndex()].save()                                                                                                       
