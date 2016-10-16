@@ -1,6 +1,4 @@
-from pygments import highlight
-from pygments.lexers import guess_lexer
-from pygments.formatters import HtmlFormatter
+import re
 
 class TextManager():
 
@@ -17,3 +15,18 @@ class TextManager():
     def save(self, fileName, text):
         file = open(fileName, 'w')
         file.write(text)
+
+    def findText(self, keyword, text):
+        results = []
+        lastIndex = 0
+        found = re.search(keyword, text[lastIndex:])
+        while (found):
+            results.append({
+                'start' : found.start() + lastIndex,
+                'end'   : found.end() + lastIndex
+            })
+
+            lastIndex = found.end() + lastIndex
+            found = re.search(keyword, text[lastIndex:])
+
+        return results

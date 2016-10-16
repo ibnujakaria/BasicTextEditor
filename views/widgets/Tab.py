@@ -8,12 +8,12 @@ class Tab(QtGui.QWidget):
     active = True
     changed = False
     currentCursorPosition = 0
+    i = 0
 
     def __init__(self, parent, fileName = None):
         super(Tab, self).__init__(parent)
         self.textManager = TextManager()
         self.fileName = fileName
-
         self.prepareUI()
 
     def prepareUI(self):
@@ -26,6 +26,13 @@ class Tab(QtGui.QWidget):
 
         self.readTheTextFromSource()
 
+        cursor = self.textEditor.textCursor()
+        cursor.movePosition(QtGui.QTextCursor.Start)
+        self.textEditor.setTextCursor(cursor)
+
+    def focusToTheTextEditor(self):
+        self.textEditor.setFocus()
+
     def readTheTextFromSource(self):
         print("prepare the text")
         if self.fileName != None:
@@ -33,7 +40,7 @@ class Tab(QtGui.QWidget):
             text = self.textManager.readFile(self.fileName)
             self.textEditor.setText(text)
 
-        # print(text)
+            # print(text)
 
     def save(self):
         print('save file of' + self.fileName)
@@ -43,5 +50,38 @@ class Tab(QtGui.QWidget):
     def onTextChanged(self):
         # do nothing
         pass
+
+
+    def findText(self, keyword, replacement = None):
+        results = self.textManager.findText(keyword, self.textEditor.toPlainText())
+        yellowText = QtGui.QTextCharFormat()
+        yellowText.setBackground(QtGui.QColor('yellow'))
+        self.textEditor.selectAll()
+        self.textEditor.setTextBackgroundColor(QtGui.QColor('transparent'))
+        for result in results:
+            start = result.get('start')
+            end = result.get('end')
+
+            cursor = self.textEditor.textCursor()
+            cursor.setPosition(start)
+            cursor.setPosition(end, QtGui.QTextCursor.KeepAnchor)
+            cursor.setCharFormat(yellowText)
+            self.textEditor.setTextCursor(cursor)
+
+            if replacement:
+                self.textEditor.insertPlainText(replacement)
+
+        if len(results):
+            start = results[0].get('start')
+            end = results[0].get('end')
+            cursor = self.textEditor.textCursor()
+            cursor.setPosition(start)
+            cursor.setPosition(end, QtGui.QTextCursor.KeepAnchor)
+            self.textEditor.setTextCursor(cursor)
+
+        # self.textEditor.setFocus()
+
+        # update the find panel
+        return results
 
 

@@ -83,6 +83,8 @@ class MainWindow(QtGui.QMainWindow):
         index = self.tabWidget.addTab(tab, title)
         self.tabWidget.setCurrentIndex(index)
 
+        tab.focusToTheTextEditor()
+
     def hideAllTextViews(self):
         for tab in self.tabs:
             tab.setActive(False)
@@ -101,4 +103,7 @@ class MainWindow(QtGui.QMainWindow):
         self.findPanel.hide()
 
     def saveFile(self):
-        self.tabs[self.tabWidget.currentIndex()].save()                                                                                                       
+        self.tabs[self.tabWidget.currentIndex()].save()
+
+    def getCurrentActiveTab(self):
+        return self.tabs[self.tabWidget.currentIndex()]
