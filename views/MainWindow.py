@@ -117,3 +117,4 @@ class MainWindow(QtGui.QMainWindow):
 
     def resizeEvent(self, event):
         self.updateSizeAndPosition()
+        self.findPanel.updateTheSizeAndThePosition()
