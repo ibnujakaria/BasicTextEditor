@@ -62,7 +62,8 @@ class Tab(QtGui.QWidget):
         yellowText.setBackground(QtGui.QColor('yellow'))
         self.textEditor.selectAll()
         self.textEditor.setTextBackgroundColor(QtGui.QColor('transparent'))
-        for result in results:
+        for i in range(len(results) - 1, -1, -1):
+            result = results[i]
             start = result.get('start')
             end = result.get('end')
 
