@@ -9,12 +9,8 @@ class EditMenu(QtGui.QMenu):
         self.mainWindow = main
 
     def prepareActions(self):
-        self.addAction("Find", self.openFindPanel, 'Ctrl+F')
-        self.addAction("Replace", self.replace, 'Ctrl+R')
+        self.addAction("Find and Replace", self.openFindPanel, 'Ctrl+F')
 
     def openFindPanel(self):
         self.mainWindow.openFindPanel()
-
-    def replace(self):
-        print('replace...')
 
