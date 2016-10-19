@@ -29,4 +29,5 @@ class TextManager():
             lastIndex = found.end() + lastIndex
             found = re.search(keyword, text[lastIndex:])
 
+        print(results)
         return results

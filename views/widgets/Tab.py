@@ -8,6 +8,8 @@ class Tab(QtGui.QWidget):
     active = True
     changed = False
     currentCursorPosition = 0
+    lastKeywordToFind = None
+    selectionIndexOfFind = 0
     i = 0
 
     def __init__(self, parent, fileName = None):
@@ -60,8 +62,12 @@ class Tab(QtGui.QWidget):
         results = self.textManager.findText(keyword, self.textEditor.toPlainText())
         yellowText = QtGui.QTextCharFormat()
         yellowText.setBackground(QtGui.QColor('yellow'))
+
+        cursor = self.textEditor.textCursor()
         self.textEditor.selectAll()
         self.textEditor.setTextBackgroundColor(QtGui.QColor('transparent'))
+        self.textEditor.setTextCursor(cursor)
+
         for i in range(len(results) - 1, -1, -1):
             result = results[i]
             start = result.get('start')
@@ -76,17 +82,22 @@ class Tab(QtGui.QWidget):
             if replacement:
                 self.textEditor.insertPlainText(replacement)
 
+        if self.lastKeywordToFind == keyword:
+            self.selectionIndexOfFind = self.selectionIndexOfFind + 1
+            if self.selectionIndexOfFind >= len(results):
+                self.selectionIndexOfFind = 0
+        else:
+            self.selectionIndexOfFind = 0
+
         if len(results):
-            start = results[0].get('start')
-            end = results[0].get('end')
+            start = results[self.selectionIndexOfFind].get('start')
+            end = results[self.selectionIndexOfFind].get('end')
             cursor = self.textEditor.textCursor()
             cursor.setPosition(start)
             cursor.setPosition(end, QtGui.QTextCursor.KeepAnchor)
             self.textEditor.setTextCursor(cursor)
 
-        # self.textEditor.setFocus()
-
-        # update the find panel
+        self.lastKeywordToFind = keyword
         return results
 
 
