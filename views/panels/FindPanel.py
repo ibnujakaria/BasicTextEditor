@@ -1,4 +1,4 @@
-from PySide import QtGui
+from PySide import QtGui, QtCore
 
 class FindPanel(QtGui.QGroupBox):
 
@@ -17,11 +17,11 @@ class FindPanel(QtGui.QGroupBox):
     def prepareUI(self):
         self.setStyleSheet('background-color: rgb(240, 240, 240)')
         self.layout = QtGui.QGridLayout()
-        self.prepareButton()
+        self.prepareButtonAndEditLine()
         self.updateTheSizeAndThePosition()
         self.setLayout(self.layout)
 
-    def prepareButton(self):
+    def prepareButtonAndEditLine(self):
         self.resultLabel = QtGui.QLabel("Find something..")
         self.findBtn = QtGui.QPushButton("Find")
         self.findEditText = QtGui.QLineEdit()

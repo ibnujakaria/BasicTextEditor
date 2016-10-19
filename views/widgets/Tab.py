@@ -1,5 +1,6 @@
 from PySide import QtGui, QtCore
 from cores import TextManager
+from .CustomTextEdit import CustomTextEdit
 
 class Tab(QtGui.QWidget):
 
@@ -24,7 +25,7 @@ class Tab(QtGui.QWidget):
         self.prepareTextView()
 
     def prepareTextView(self):
-        self.textEditor = QtGui.QTextEdit(self)
+        self.textEditor = CustomTextEdit(self)
         self.textEditor.textChanged.connect(self.onTextChanged)
 
         self.readTheTextFromSource()
