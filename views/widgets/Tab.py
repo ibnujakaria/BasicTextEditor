@@ -14,6 +14,7 @@ class Tab(QtGui.QWidget):
         super(Tab, self).__init__(parent)
         self.textManager = TextManager()
         self.fileName = fileName
+        self.mainWindow = parent
         self.prepareUI()
         self.updateSizeAndPosition()
 
@@ -43,8 +44,11 @@ class Tab(QtGui.QWidget):
             # print(text)
 
     def save(self):
-        print('save file of' + self.fileName)
-        print(self.textEditor.toPlainText())
+        if self.fileName == None:
+            # fileName = QtGui.QFileDialog.getOpenFileName(self, 'Open File', '~/')
+            self.fileName = QtGui.QFileDialog.getSaveFileName(self, 'Open File', '~/')[0]
+            title = self.fileName.split("/")[-1]
+            self.mainWindow.updateCurrentTabTitle(title)
         self.textManager.save(self.fileName, self.textEditor.toPlainText())
 
     def onTextChanged(self):

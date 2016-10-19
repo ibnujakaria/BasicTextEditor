@@ -109,9 +109,11 @@ class MainWindow(QtGui.QMainWindow):
     def saveFile(self):
         self.tabs[self.tabWidget.currentIndex()].save()
 
+    def updateCurrentTabTitle(self, title):
+        self.tabWidget.setTabText(self.tabWidget.currentIndex(), title)
+
     def getCurrentActiveTab(self):
         return self.tabs[self.tabWidget.currentIndex()]
-
 
     def resizeEvent(self, event):
         self.updateSizeAndPosition()
