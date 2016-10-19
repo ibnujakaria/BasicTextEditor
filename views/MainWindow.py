@@ -13,6 +13,7 @@ class MainWindow(QtGui.QMainWindow):
         super(MainWindow, self).__init__()
 
         self.prepareUI()
+        self.updateSizeAndPosition()
 
     def prepareUI(self):
         self.resize(800, 600)
@@ -39,14 +40,10 @@ class MainWindow(QtGui.QMainWindow):
     def prepareWelcomeText(self):
         self.label = QtGui.QLabel("Selamat datang di basic text editor :)", self)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.resize(self.width(), self.height() - 50)
         self.label.setFont(QtGui.QFont('Sans', 20))
-        self.label.move(0, 30)
 
     def prepareTabWidget(self):
         self.tabWidget = QtGui.QTabWidget(self)
-        self.tabWidget.resize(self.label.size())
-        self.tabWidget.move(0, 30)
         self.tabWidget.setMovable(True)
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.tabCloseRequested.connect(self.closeTab)
@@ -55,6 +52,13 @@ class MainWindow(QtGui.QMainWindow):
     def prepareBottomPanel(self):
         self.findPanel = FindPanel(self)
         self.findPanel.hide()
+
+    def updateSizeAndPosition(self):
+        self.label.resize(self.width(), self.height() - 50)
+        self.label.move(0, 30)
+
+        self.tabWidget.resize(self.label.size())
+        self.tabWidget.move(0, 30)
 
     def openFindPanel(self, focus = 'find'):
         if not len(self.tabs):
@@ -107,3 +111,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def getCurrentActiveTab(self):
         return self.tabs[self.tabWidget.currentIndex()]
+
+
+    def resizeEvent(self, event):
+        self.updateSizeAndPosition()

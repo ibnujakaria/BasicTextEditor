@@ -15,13 +15,13 @@ class Tab(QtGui.QWidget):
         self.textManager = TextManager()
         self.fileName = fileName
         self.prepareUI()
+        self.updateSizeAndPosition()
 
     def prepareUI(self):
         self.prepareTextView()
 
     def prepareTextView(self):
         self.textEditor = QtGui.QTextEdit(self)
-        self.textEditor.resize(self.parent().width() - 5, self.parent().height() - 90)
         self.textEditor.textChanged.connect(self.onTextChanged)
 
         self.readTheTextFromSource()
@@ -85,3 +85,8 @@ class Tab(QtGui.QWidget):
         return results
 
 
+    def updateSizeAndPosition(self):
+        self.textEditor.resize(self.parent().width() - 5, self.parent().height() - 90)
+
+    def resizeEvent(self, event):
+        self.updateSizeAndPosition()
