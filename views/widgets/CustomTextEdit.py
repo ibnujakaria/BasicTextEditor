@@ -37,7 +37,7 @@ class CustomTextEdit(QtGui.QTextEdit):
 
     def keyPressEvent(self, event):
         key = event.key()
-        if key == QtCore.Qt.Key_Enter or key == QtCore.Qt.Key_Return:
+        if key == QtCore.Qt.Key_Enter or key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Space:
             if self.completer.popup().isVisible():
                 completion = self.completion
                 if not completion:
