@@ -18,6 +18,7 @@ This is an example of how basic text editor implemented with PySide.
 - `cd BasicTextEditor`
 - `python3.5 main.py`
 
+## Some Screenshots
 [![Screenshot from 2016-11-03 19-11-45.png](https://s21.postimg.org/69cipywyf/Screenshot_from_2016_11_03_19_11_45.png)](https://postimg.org/image/upuokfxoz/)
 
 [![g.png](https://s13.postimg.org/x2pdhsstz/image.png)](https://postimg.org/image/nux513lrn/)
